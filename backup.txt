@@ -1,0 +1,53 @@
+function removeDuplicates(myArr, prop) {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    });
+}
+
+d3.dsv(",", "diet-compositions-by-commodity-categories-fao-2017.csv", function(d) {
+    //+ converts all strings into integers more efficient than parseInt
+    return {
+        Country : d.Entity,
+        Year : new Date(+d.Year, 0, 1),
+        Cereals_and_Grains_kpppd :  +d["Cereals and Grains (FAO (2017)) (kilocalories per person per day)"],
+        Pulses_kpppd : +d["Pulses (FAO (2017)) (kilocalories per person per day)"],
+        Starchy_Roots_kpppd : +d["Starchy Roots (FAO (2017)) (kilocalories per person per day)"],
+        Sugar_kpppd : +d["Sugar (FAO (2017)) (kilocalories per person per day)"],
+        Oils_Fats_kpppd : +d["Oils & Fats (FAO (2017)) (kilocalories per person per day)"],
+        Meat_kpppd : +d["Meat (FAO (2017)) (kilocalories per person per day)"],
+        Dairy_Eggs_kpppd : +d["Dairy & Eggs (FAO (2017)) (kilocalories per person per day)"],
+        Fruit_vegitables_kpppd : +d["Fruit and Vegetables (FAO (2017)) (kilocalories per person per day)"]
+    };
+
+        
+  }).then(function(data) {
+    // let result = data.filter(obj => {
+    //     return obj.Country === "Afghanistan"
+    //   });
+    //   console.log (result)
+
+    let uniqueCountryArray = removeDuplicates(data, "Country");
+   
+
+    var select = d3.select("body")
+    .append("div")
+    .append("select")
+
+     select.selectAll("option")
+     .data(uniqueCountryArray)
+     .enter()
+       .append("option")
+       .text(function (d) { return d.Country; });
+  });
+
+
+
+//Object { Entity: "Zimbabwe", Year: "2004", 
+//"Cereals and Grains (FAO (2017)) (kilocalories per person per day)": "1158", 
+//"Pulses (FAO (2017)) (kilocalories per person per day)": "46", 
+//"Starchy Roots (FAO (2017)) (kilocalories per person per day)": "49",
+//"Sugar (FAO (2017)) (kilocalories per person per day)": "250", 
+//"Oils & Fats (FAO (2017)) (kilocalories per person per day)": "317", 
+//"Meat (FAO (2017)) (kilocalories per person per day)": "82", 
+//"Dairy & Eggs (FAO (2017)) (kilocalories per person per day)": "51", 
+//"Fruit and Vegetables (FAO (2017)) (kilocalories per person per day)": "28", … }
