@@ -26,7 +26,7 @@
   }());
   
     // Define margins
-    const margin = {top: 50, right: 100, bottom: 30, left: 50},
+    const margin = {top: 20, right: 100, bottom: 50, left: 50},
       width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
       height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
   
@@ -182,7 +182,12 @@
             svg.append("g")
               .attr("class", "x-axis")
               .attr("transform", "translate(0," + height + ")")
-              .call(xAxis);
+              .call(xAxis)
+              .selectAll("text")	
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", "rotate(-65)");
         
             svg.append("text")
               .attr("transform", "rotate(-90)")
@@ -195,12 +200,22 @@
         
             svg.append("g")
               .attr("class", "y-axis")
-              .call(yAxis);
+              .call(yAxis)
+              .selectAll("text")	
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", "rotate(-65)");
           } else {
         
             svg.select(".x-axis")
               .transition(t)
-              .call(xAxis);
+              .call(xAxis)
+              .selectAll("text")	
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", "rotate(-65)");
         
             svg.select(".y-axis")
               .transition(t)
@@ -345,7 +360,12 @@
       svg.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
     
       svg.append("g")
         .attr("class", "y-axis")
@@ -354,7 +374,12 @@
 
       svg.select(".x-axis")
         .transition(t)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
   
       svg.select(".y-axis")
         .transition(t)
@@ -388,7 +413,7 @@ if (selection.empty()) {
     
     selection.filter(d => d[d.length - 1][1] - d[d.length - 1][0] > 0.01)
       .append("text")
-        .attr("class", "textkey")
+        .attr("class", "textkey") 
         .attr("x", width - 6)
         .attr("y",d => yScale((d[d.length - 1][0] + d[d.length - 1][1]) / 2))
         .attr("dy", "0.35em")
